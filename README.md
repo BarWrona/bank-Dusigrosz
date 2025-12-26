@@ -72,21 +72,11 @@ Projekt opiera się na zaawansowanym modelu bazodanowym:
 
 | Metoda | Endpoint | Opis |
 | :--- | :--- | :--- |
-| `POST` | `/api/users` | Rejestracja użytkownika wraz z profilem preferencji |
-| `GET` | `/api/accounts/my` | Lista wszystkich kont zalogowanego użytkownika |
-| `POST` | `/api/transfers/exchange` | Przelew między kontami z automatycznym przewalutowaniem |
-| `GET` | `/api/currency/rates` | Pobranie aktualnych kursów walut pobranych z NBP |
+| `GET` | `/api/currency` | Rejestracja użytkownika wraz z profilem preferencji |
+| `POST` | `/api/update-rates` | Lista wszystkich kont zalogowanego użytkownika |
 
 ---
 
-## 🛤 Mapa drogowa (Roadmap)
-
-- [x] Implementacja modelu użytkownika i kont wielowalutowych.
-- [x] Integracja z NBP API.
-- [ ] Implementacja logiki przelewów cross-currency.
-- [ ] Obsługa wielu właścicieli (zaproszenia do konta).
-- [ ] System autentykacji (Spring Security + JWT).
-- [ ] Konteneryzacja aplikacji (Docker).
 
 ---
 *Projekt rozwijany w celach edukacyjnych, demonstrujący obsługę złożonych relacji bazodanowych i integracji zewnętrznych API.*
