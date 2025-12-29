@@ -29,7 +29,7 @@ public class CurrencyService {
     }
 
     public Currency getCurrencyByCode(String code) throws CurrencyException {
-        return currencyRepository.findByCode(code)
+        return currencyRepository.findByCodeIgnoreCase(code)
                 .orElseThrow(()->new CurrencyException("Currency not found"));
     }
 
@@ -45,7 +45,7 @@ public class CurrencyService {
             List<CurrencyDto> rates = response.getBody()[0].getRates();
 
             for(CurrencyDto rate : rates){
-                Optional<Currency> existingCurrency = currencyRepository.findByCode(rate.getCode());
+                Optional<Currency> existingCurrency = currencyRepository.findByCodeIgnoreCase(rate.getCode());
 
                 if(existingCurrency.isPresent()){
                     Currency currency = existingCurrency.get();

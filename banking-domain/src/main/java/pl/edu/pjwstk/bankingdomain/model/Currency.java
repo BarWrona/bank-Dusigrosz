@@ -17,6 +17,7 @@ public class Currency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true, nullable = false, updatable = false)
     private String code;
     private BigDecimal exchangeRate;
 
