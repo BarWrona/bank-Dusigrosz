@@ -19,6 +19,7 @@ public class Currency {
     private String name;
     @Column(unique = true, nullable = false, updatable = false)
     private String code;
+    @Column(precision = 10, scale = 5)
     private BigDecimal exchangeRate;
 
 }

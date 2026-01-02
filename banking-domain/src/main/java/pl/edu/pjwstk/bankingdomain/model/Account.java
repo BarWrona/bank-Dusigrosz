@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +21,12 @@ public class Account {
     @Id
     @Column(length = 34)
     private String iban;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "currency_id")
     private Currency currency;
-    @Column(name = "amount")
-    private double balance;
+    @Column(name = "amount", precision = 19, scale = 2)
+    private BigDecimal balance;
 
     @ManyToMany(mappedBy = "accounts")
-    private Set<User> owners = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 }
