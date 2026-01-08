@@ -9,13 +9,15 @@ Projekt może służyć jako baza do nauki architektury aplikacji, obsługi kont
 
 Projekt jest podzielony na moduły:
 
-├── bootstrap/ # Punkt startowy aplikacji / konfiguracja
-├── common/ # Wspólne klasy pomocnicze i utilsy
-├── domain/ # Modele domenowe i encje
-├── service/ # Logika biznesowa
-├── web/ # Warstwa prezentacji / kontrolery REST
-├── pom.xml # Konfiguracja Maven i zależności
-└── .mvn/ # Maven Wrapper
+```text
+├── bootstrap/   # Punkt startowy aplikacji / konfiguracja
+├── common/      # Wspólne klasy pomocnicze i utilsy
+├── domain/      # Modele domenowe i encje
+├── service/     # Logika biznesowa
+├── web/         # Warstwa prezentacji / kontrolery REST
+├── pom.xml      # Konfiguracja Maven i zależności
+└── .mvn/        # Maven Wrapper
+
 
 ---
 
@@ -61,12 +63,15 @@ Jeśli projekt jest oparty o Spring Boot:
 mvn spring-boot:run
 ```
 ---
-📡 REST API (przykładowe endpointy)
-Metoda	Endpoint	Opis
-GET	/accounts	Pobranie listy kont
-GET	/accounts/{id}	Szczegóły konta
-POST	/transactions	Wykonanie transakcji
-PUT	/accounts/{id}	Aktualizacja danych konta
+## 📡 REST API (przykładowe endpointy)
+
+| Metoda | Endpoint             | Opis                       |
+|--------|----------------------|----------------------------|
+| GET    | `/accounts`          | Pobranie listy kont        |
+| GET    | `/accounts/{id}`     | Szczegóły konta            |
+| POST   | `/transactions`      | Wykonanie transakcji       |
+| PUT    | `/accounts/{id}`     | Aktualizacja danych konta  |
+
 
 Uwaga: Endpointy są przykładowe — dostosuj je do faktycznej implementacji.
 
