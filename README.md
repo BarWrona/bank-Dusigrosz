@@ -18,7 +18,7 @@ Projekt jest podzielony na moduły:
 ├── pom.xml      # Konfiguracja Maven i zależności
 └── .mvn/        # Maven Wrapper
 
-
+```
 ---
 
 ## 🚀 Funkcjonalności
