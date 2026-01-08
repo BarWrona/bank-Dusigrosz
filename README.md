@@ -77,16 +77,15 @@ Uruchomienie testów jednostkowych:
 mvn test
 ```
 ---
-🏗️ Architektura
+## 🏗️ Architektura
 
 Projekt wykorzystuje klasyczne podejście warstwowe:
 
-Domain – logika domenowa i encje
+| Moduł       | Opis                                           |
+|------------|------------------------------------------------|
+| **Domain** | Logika domenowa oraz encje aplikacji            |
+| **Service**| Reguły biznesowe i przetwarzanie danych         |
+| **Web**    | Kontrolery REST oraz API                        |
+| **Common** | Współdzielone komponenty i klasy pomocnicze     |
+| **Bootstrap** | Uruchamianie aplikacji oraz konfiguracja    |
 
-Service – reguły biznesowe
-
-Web – kontrolery i API
-
-Common – współdzielone komponenty
-
-Bootstrap – uruchamianie i konfiguracja
