@@ -36,7 +36,7 @@ class UserControllerTest {
         UserDto user = new UserDto();
         when(userService.getAll()).thenReturn(List.of(user));
 
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -47,7 +47,7 @@ class UserControllerTest {
         UserDto user = new UserDto();
         when(userService.getById(id)).thenReturn(user);
 
-        mockMvc.perform(get("/users/{id}", id))
+        mockMvc.perform(get("/api/users/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -57,7 +57,7 @@ class UserControllerTest {
         UserDto userDto = new UserDto();
         when(userService.create(any(UserDto.class))).thenReturn(userDto);
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
                 .andExpect(status().isCreated());
@@ -69,7 +69,7 @@ class UserControllerTest {
         UserDto userDto = new UserDto();
         when(userService.update(eq(id), any(UserDto.class))).thenReturn(userDto);
 
-        mockMvc.perform(put("/users/{id}", id)
+        mockMvc.perform(put("/api/users/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
                 .andExpect(status().isOk());
@@ -80,7 +80,7 @@ class UserControllerTest {
         Long id = 1L;
         doNothing().when(userService).delete(id);
 
-        mockMvc.perform(delete("/users/{id}", id))
+        mockMvc.perform(delete("/api/users/{id}", id))
                 .andExpect(status().isNoContent());
     }
 }

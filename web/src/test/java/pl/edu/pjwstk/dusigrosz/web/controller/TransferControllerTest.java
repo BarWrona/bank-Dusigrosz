@@ -37,7 +37,7 @@ class TransferControllerTest {
         TransferDto transfer = new TransferDto();
         when(transferService.getAll()).thenReturn(List.of(transfer));
 
-        mockMvc.perform(get("/transfers"))
+        mockMvc.perform(get("/api/transfers"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -48,7 +48,7 @@ class TransferControllerTest {
         TransferDto transfer = new TransferDto();
         when(transferService.getTransferById(id)).thenReturn(transfer);
 
-        mockMvc.perform(get("/transfers/{id}", id))
+        mockMvc.perform(get("/api/transfers/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -58,7 +58,7 @@ class TransferControllerTest {
         TransferRequest request = new TransferRequest();
         doNothing().when(transferService).executeTransfer(any(TransferRequest.class));
 
-        mockMvc.perform(post("/transfers")
+        mockMvc.perform(post("/api/transfers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())

@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.dusigrosz.service.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import pl.edu.pjwstk.dusigrosz.domain.model.User;
 import pl.edu.pjwstk.dusigrosz.domain.model.UserProfile;
 import pl.edu.pjwstk.dusigrosz.domain.repository.UserProfileRepository;
 import pl.edu.pjwstk.dusigrosz.domain.repository.UserRepository;
-
 
 @Service
 @RequiredArgsConstructor
@@ -65,8 +63,7 @@ public class UserProfileService {
     private UserProfileDto convertToDto(UserProfile userProfile) {
         return new UserProfileDto(
                 userProfile.getId(),
-                userProfile.isAdditionalDataCollecting(),
-                userProfile.isTwoFactorAuth()
-        );
+                userProfile.isTwoFactorAuth(),
+                userProfile.isAdditionalDataCollecting());
     }
 }

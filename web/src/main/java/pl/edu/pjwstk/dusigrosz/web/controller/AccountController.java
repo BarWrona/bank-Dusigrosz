@@ -17,7 +17,7 @@ import pl.edu.pjwstk.dusigrosz.service.service.AccountService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/api/accounts")
 @RequiredArgsConstructor
 @Tag(name = "Accounts management")
 public class AccountController {

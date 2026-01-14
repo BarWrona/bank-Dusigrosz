@@ -1,0 +1,279 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f1f5f9;
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.025em;
+}
+
+.headerActions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.backButton {
+    background-color: white;
+    color: #2563eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: 1px solid #bfdbfe;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backButton:hover {
+    background-color: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.addButton {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.addButton:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+}
+
+.addButton:active {
+    transform: translateY(0);
+}
+
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table thead {
+    background-color: #f8fafc;
+}
+
+.table th {
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+    padding: 1rem 1.5rem;
+    color: #334155;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover {
+    background-color: #f8fafc;
+}
+
+.idCell {
+    font-family: 'ui-monospace', 'SFMono-Regular', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.mono {
+    font-family: 'ui-monospace', 'SFMono-Regular', monospace;
+    color: #475569;
+    letter-spacing: -0.025em;
+}
+
+.actionsHeader {
+    text-align: right;
+}
+
+.actionsCell {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.editButton {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #fcfafa;
+    color: #4f46e5;
+    border: 1px solid #e0e7ff;
+}
+
+.editButton:hover {
+    background-color: #eef2ff;
+    border-color: #c7d2fe;
+}
+
+.deleteButton {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #fffafa;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+}
+
+.deleteButton:hover {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+}
+
+.info {
+    text-align: center;
+    padding: 4rem;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.error {
+    color: #ef4444;
+}
+
+.deleteWrapper {
+    position: relative;
+}
+
+.confirmationPopup {
+    position: absolute;
+    bottom: 120%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 0.75rem;
+    z-index: 10;
+    min-width: 140px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.confirmationPopup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.popupText {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-align: center;
+    font-weight: 600;
+}
+
+.popupActions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.confirmBtn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.confirmBtn:hover {
+    background-color: #dc2626;
+}
+
+.cancelBtn {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cancelBtn:hover {
+    background-color: #e2e8f0;
+}

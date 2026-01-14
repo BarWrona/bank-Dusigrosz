@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.dusigrosz.service.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import pl.edu.pjwstk.dusigrosz.domain.model.User;
 import pl.edu.pjwstk.dusigrosz.domain.model.Visor;
 import pl.edu.pjwstk.dusigrosz.domain.repository.VisorRepository;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,13 +19,11 @@ public class VisorService {
 
     private final VisorRepository visorRepository;
 
-
     public List<VisorDto> getAll() {
         return visorRepository.findAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
 
     public VisorDto getById(Long id) throws VisorException {
         return visorRepository.findById(id)
@@ -44,10 +40,12 @@ public class VisorService {
                         user.getId(),
                         user.getFirstName(),
                         user.getLastName(),
-                        user.getUsername(),
                         user.getPesel(),
-                        user.getPhoneNumber()
-                ))
+                        user.getPhoneNumber(),
+                        user.getUsername(),
+                        visor.getFirstName() + " " + visor.getLastName(),
+                        visor.getPhoneNumber(),
+                        null))
                 .collect(Collectors.toList());
     }
 
@@ -56,6 +54,8 @@ public class VisorService {
         Visor visor = new Visor();
         visor.setFirstName(dto.getFirstName());
         visor.setLastName(dto.getLastName());
+        visor.setPesel(dto.getPesel());
+        visor.setPhoneNumber(dto.getPhoneNumber());
 
         Visor savedVisor = visorRepository.save(visor);
         return convertToDto(savedVisor);
@@ -92,7 +92,6 @@ public class VisorService {
                 visor.getLastName(),
                 visor.getPhoneNumber(),
                 visor.getPesel(),
-                userIds
-        );
+                userIds);
     }
 }

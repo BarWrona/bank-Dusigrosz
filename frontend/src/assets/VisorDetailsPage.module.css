@@ -1,0 +1,92 @@
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    padding-top: 4rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 0 1.5rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.backButton {
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+}
+
+.backButton:hover {
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.detailRow:last-child {
+    border-bottom: none;
+}
+
+.label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.value {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.valueMono {
+    font-family: 'Roboto Mono', monospace;
+    color: #334155;
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.loading,
+.error {
+    text-align: center;
+    color: #64748b;
+    margin-top: 2rem;
+}
+
+.error {
+    color: #ef4444;
+}

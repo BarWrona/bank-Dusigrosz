@@ -19,6 +19,7 @@
         <module>service</module>
         <module>web</module>
         <module>bootstrap</module>
+        <module>frontend</module>
     </modules>
 
     <properties>

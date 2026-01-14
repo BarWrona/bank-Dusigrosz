@@ -3,6 +3,7 @@ package pl.edu.pjwstk.dusigrosz.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import pl.edu.pjwstk.dusigrosz.service.service.VisorService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/visors")
+@RequestMapping("/api/visors")
 @RequiredArgsConstructor
 @Tag(name = "Visors management")
 public class VisorController {
@@ -36,7 +37,7 @@ public class VisorController {
 
     @Operation(summary = "Create new visor")
     @PostMapping
-    public ResponseEntity<VisorDto> create(@RequestBody VisorDto dto) throws VisorException {
+    public ResponseEntity<VisorDto> create(@Valid @RequestBody VisorDto dto) throws VisorException {
         return new ResponseEntity<>(visorService.create(dto), HttpStatus.CREATED);
     }
 

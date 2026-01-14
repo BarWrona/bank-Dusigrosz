@@ -10,11 +10,10 @@ import pl.edu.pjwstk.dusigrosz.common.customException.UserException;
 import pl.edu.pjwstk.dusigrosz.common.dto.UserDto;
 import pl.edu.pjwstk.dusigrosz.service.service.UserService;
 
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Tag(name = "User Management")
 public class UserController {

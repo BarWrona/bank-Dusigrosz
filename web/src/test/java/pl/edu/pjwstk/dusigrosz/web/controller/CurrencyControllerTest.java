@@ -31,7 +31,7 @@ class CurrencyControllerTest {
         CurrencyDto currency = new CurrencyDto();
         when(currencyService.getAllCurrencies()).thenReturn(List.of(currency));
 
-        mockMvc.perform(get("/currencies"))
+        mockMvc.perform(get("/api/currencies"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -42,7 +42,7 @@ class CurrencyControllerTest {
         CurrencyDto currency = new CurrencyDto();
         when(currencyService.getCurrencyByCode(code)).thenReturn(currency);
 
-        mockMvc.perform(get("/currencies/{code}", code))
+        mockMvc.perform(get("/api/currencies/{code}", code))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -51,7 +51,7 @@ class CurrencyControllerTest {
     void shouldUpdateExchangeRates() throws Exception {
         doNothing().when(currencyService).updateExchangeRates();
 
-        mockMvc.perform(post("/currencies/update-rates"))
+        mockMvc.perform(post("/api/currencies/update-rates"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Rates updated"));
     }

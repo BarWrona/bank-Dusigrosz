@@ -1,0 +1,253 @@
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f0fdfa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.container {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 500px;
+}
+
+.title {
+    color: #115e59;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.step {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+}
+
+.activeStep {
+    background-color: #0d9488;
+    color: white;
+}
+
+.stepLine {
+    height: 2px;
+    width: 60px;
+    background-color: #e2e8f0;
+    margin: 0 -5px;
+}
+
+.stepLabels {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 2rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.stepContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.formGroup input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+.nextButton {
+    background-color: #0d9488;
+    color: white;
+    padding: 0.875rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.nextButton:hover {
+    background-color: #0f766e;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.backButton {
+    flex: 1;
+    background-color: white;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 0.875rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.backButton:hover {
+    background-color: #f9fafb;
+}
+
+.submitButton {
+    flex: 2;
+    background-color: #0d9488;
+    color: white;
+    border: none;
+    padding: 0.875rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background-color: #0f766e;
+}
+
+.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.stepTitle {
+    color: #0f766e;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+
+.toggleRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.toggleLabel {
+    font-weight: 500;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #0d9488;
+}
+
+input:checked+.slider:before {
+    transform: translateX(22px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -13,7 +13,7 @@ import pl.edu.pjwstk.dusigrosz.service.service.CurrencyService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/currencies")
+@RequestMapping("/api/currencies")
 @RequiredArgsConstructor
 @Tag(name = "Currencies management")
 public class CurrencyController {

@@ -35,7 +35,7 @@ class AccountControllerTest {
         AccountDto account = new AccountDto();
         when(accountService.findAll()).thenReturn(List.of(account));
 
-        mockMvc.perform(get("/accounts"))
+        mockMvc.perform(get("/api/accounts"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -45,7 +45,7 @@ class AccountControllerTest {
         AccountDto accountDto = new AccountDto();
         when(accountService.create(any(AccountDto.class))).thenReturn(accountDto);
 
-        mockMvc.perform(post("/accounts")
+        mockMvc.perform(post("/api/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountDto)))
                 .andExpect(status().isCreated());
@@ -57,7 +57,7 @@ class AccountControllerTest {
         AccountDto account = new AccountDto();
         when(accountService.getById(id)).thenReturn(account);
 
-        mockMvc.perform(get("/accounts/{id}", id))
+        mockMvc.perform(get("/api/accounts/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -67,7 +67,7 @@ class AccountControllerTest {
         Long id = 1L;
         doNothing().when(accountService).delete(id);
 
-        mockMvc.perform(delete("/accounts/{id}", id))
+        mockMvc.perform(delete("/api/accounts/{id}", id))
                 .andExpect(status().isNoContent());
     }
 }

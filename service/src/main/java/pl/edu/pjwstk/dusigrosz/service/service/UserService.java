@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.dusigrosz.service.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,8 @@ import pl.edu.pjwstk.dusigrosz.common.customException.UserException;
 import pl.edu.pjwstk.dusigrosz.common.dto.UserDto;
 import pl.edu.pjwstk.dusigrosz.domain.model.User;
 import pl.edu.pjwstk.dusigrosz.domain.repository.UserRepository;
-
+import pl.edu.pjwstk.dusigrosz.domain.repository.VisorRepository;
+import pl.edu.pjwstk.dusigrosz.service.service.UserProfileService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final VisorRepository visorRepository;
+    private final UserProfileService userProfileService;
 
     public List<UserDto> getAll() {
         return userRepository.findAll().stream()
@@ -30,7 +32,7 @@ public class UserService {
                 .orElseThrow(() -> new UserException("User not found"));
     }
 
-    public UserDto getByUsername(String username) throws UserException{
+    public UserDto getByUsername(String username) throws UserException {
         return userRepository.findByUsernameIgnoreCase(username)
                 .map(this::convertToDto)
                 .orElseThrow(() -> new UserException("User not found"));
@@ -38,8 +40,29 @@ public class UserService {
 
     @Transactional
     public UserDto create(UserDto userDto) {
+        List<pl.edu.pjwstk.dusigrosz.domain.model.Visor> availableVisors = visorRepository.findAll().stream()
+                .filter(v -> v.getUsers().size() < 5)
+                .collect(Collectors.toList());
+        pl.edu.pjwstk.dusigrosz.domain.model.Visor selectedVisor = null;
+        if (!availableVisors.isEmpty()) {
+            selectedVisor = availableVisors.get(0);
+        } else {
+            throw new RuntimeException("No advisors available to assign.");
+        }
+
         User user = convertToEntity(userDto);
+        user.setVisor(selectedVisor);
+
         User savedUser = userRepository.save(user);
+
+        if (userDto.getProfile() != null) {
+            try {
+                userProfileService.create(savedUser.getId(), userDto.getProfile());
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to create user profile: " + e.getMessage());
+            }
+        }
+
         return convertToDto(savedUser);
     }
 
@@ -71,7 +94,10 @@ public class UserService {
                 user.getLastName(),
                 user.getPesel(),
                 user.getPhoneNumber(),
-                user.getUsername());
+                user.getUsername(),
+                user.getVisor() != null ? user.getVisor().getFirstName() + " " + user.getVisor().getLastName() : null,
+                user.getVisor() != null ? user.getVisor().getPhoneNumber() : null,
+                null);
     }
 
     private User convertToEntity(UserDto dto) {

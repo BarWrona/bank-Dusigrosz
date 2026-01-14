@@ -36,7 +36,7 @@ public class VisorControllerTest {
         VisorDto dto = new VisorDto();
         when(visorService.getAll()).thenReturn(List.of(dto));
 
-        mockMvc.perform(get("/visors"))
+        mockMvc.perform(get("/api/visors"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -47,7 +47,7 @@ public class VisorControllerTest {
         VisorDto dto = new VisorDto();
         when(visorService.getById(id)).thenReturn(dto);
 
-        mockMvc.perform(get("/visors/{id}", id))
+        mockMvc.perform(get("/api/visors/{id}", id))
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +58,7 @@ public class VisorControllerTest {
 
         when(visorService.create(inputDto)).thenReturn(savedDto);
 
-        mockMvc.perform(post("/visors")
+        mockMvc.perform(post("/api/visors")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(inputDto)))
                 .andExpect(status().isCreated());
@@ -71,7 +71,7 @@ public class VisorControllerTest {
 
         when(visorService.update(eq(id),any(VisorDto.class))).thenReturn(dto);
 
-        mockMvc.perform(put("/visors/{id}", id)
+        mockMvc.perform(put("/api/visors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))
                 )
@@ -82,7 +82,7 @@ public class VisorControllerTest {
     void shouldDeleteVisor() throws Exception{
         Long id = 1L;
 
-        mockMvc.perform(delete("/visors/{id}", id))
+        mockMvc.perform(delete("/api/visors/{id}", id))
                 .andExpect(status().isNoContent());
     }
 }

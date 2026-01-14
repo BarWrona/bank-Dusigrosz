@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ public class Visor {
     private Long id;
     private String firstName;
     private String lastName;
+    @PESEL
+    @Column(unique = true, nullable = false)
     private String pesel;
     private String phoneNumber;
 

@@ -12,7 +12,7 @@ import pl.edu.pjwstk.dusigrosz.service.service.UserProfileService;
 
 
 @RestController
-@RequestMapping("/user-profiles")
+@RequestMapping("/api/user-profiles")
 @RequiredArgsConstructor
 @Tag(name = "User Profile Management")
 public class UserProfileController {

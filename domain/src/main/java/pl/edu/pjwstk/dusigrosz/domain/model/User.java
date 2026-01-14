@@ -1,17 +1,19 @@
 package pl.edu.pjwstk.dusigrosz.domain.model;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -19,6 +21,8 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    @PESEL
+    @Column(unique = true, nullable = false)
     private String pesel;
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,12 +33,7 @@ public class User {
     private UserProfile userProfile;
 
     @ManyToMany
-    @JoinTable(
-            name = "users_accounts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_iban")
-    )
+    @JoinTable(name = "users_accounts", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "account_iban"))
     private Set<Account> accounts = new HashSet<>();
-
 
 }

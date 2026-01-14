@@ -10,19 +10,18 @@ import pl.edu.pjwstk.dusigrosz.common.dto.TransferDto;
 import pl.edu.pjwstk.dusigrosz.common.dto.TransferRequest;
 import pl.edu.pjwstk.dusigrosz.service.service.TransferService;
 
-
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/transfers")
+@RequestMapping("/api/transfers")
 @Tag(name = "Transfers management")
 public class TransferController {
     private final TransferService transferService;
 
     @Operation(summary = "Get all transfers")
     @GetMapping
-    public ResponseEntity<List<TransferDto>> getAll(){
+    public ResponseEntity<List<TransferDto>> getAll() {
         return ResponseEntity.ok(transferService.getAll());
     }
 

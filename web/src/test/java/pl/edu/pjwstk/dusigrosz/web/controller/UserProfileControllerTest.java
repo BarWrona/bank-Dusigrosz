@@ -35,7 +35,7 @@ class UserProfileControllerTest {
         UserProfileDto dto = new UserProfileDto();
         when(userProfileService.getProfileByUserId(userId)).thenReturn(dto);
 
-        mockMvc.perform(get("/user-profiles/{userId}", userId))
+        mockMvc.perform(get("/api/user-profiles/{userId}", userId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -46,7 +46,7 @@ class UserProfileControllerTest {
         UserProfileDto dto = new UserProfileDto();
         when(userProfileService.create(eq(userId), any(UserProfileDto.class))).thenReturn(dto);
 
-        mockMvc.perform(post("/user-profiles/{userId}", userId)
+        mockMvc.perform(post("/api/user-profiles/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated());
@@ -58,7 +58,7 @@ class UserProfileControllerTest {
         UserProfileDto dto = new UserProfileDto();
         when(userProfileService.update(eq(userId), any(UserProfileDto.class))).thenReturn(dto);
 
-        mockMvc.perform(put("/user-profiles/{userId}", userId)
+        mockMvc.perform(put("/api/user-profiles/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -69,7 +69,7 @@ class UserProfileControllerTest {
         Long userId = 1L;
         doNothing().when(userProfileService).delete(userId);
 
-        mockMvc.perform(delete("/user-profiles/{userId}", userId))
+        mockMvc.perform(delete("/api/user-profiles/{userId}", userId))
                 .andExpect(status().isNoContent());
     }
 }
