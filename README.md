@@ -65,12 +65,12 @@ mvn spring-boot:run
 ---
 ## 📡 REST API (przykładowe endpointy)
 
-| Metoda | Endpoint             | Opis                       |
-|--------|----------------------|----------------------------|
-| GET    | `/accounts`          | Pobranie listy kont        |
-| GET    | `/accounts/{id}`     | Szczegóły konta            |
-| POST   | `/transactions`      | Wykonanie transakcji       |
-| PUT    | `/accounts/{id}`     | Aktualizacja danych konta  |
+| Metoda | Endpoint                 | Opis                       |
+|--------|--------------------------|----------------------------|
+| GET    | `/api/accounts`          | Pobranie listy kont        |
+| GET    | `/api/accounts/{id}`     | Szczegóły konta            |
+| POST   | `/api/transactions`      | Wykonanie transakcji       |
+| PUT    | `/api/accounts/{id}`     | Aktualizacja danych konta  |
 
 
 Uwaga: Endpointy są przykładowe — dostosuj je do faktycznej implementacji.
