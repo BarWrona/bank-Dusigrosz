@@ -9,11 +9,13 @@ const LandingPage = () => {
                     <div class={styles.logo}>Dusigrosz Bank</div>
                     <div class={styles.navLinks}>
                         <a href="#" class={styles.navLink}>Oferta</a>
-                        <a href="#" class={styles.navLink}>Dla Firm</a>
                         <a href="#" class={styles.navLink}>Pomoc</a>
                     </div>
-                    <A href="/control-panel" class={styles.loginButton}>
-                        Przejdź do panelu
+                    <A href="/login" class={styles.loginButton}>
+                        Zaloguj
+                    </A>
+                    <A href="/register" class={styles.primaryButton} style="margin-left: 10px; text-decoration: none; padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                        Zarejestruj się
                     </A>
                 </div>
             </nav>
@@ -28,7 +30,7 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div class={styles.heroImage}>
-                    {/* TODO */}
+
                     <div class={styles.decorativeCircle}></div>
                 </div>
             </header>

@@ -25,11 +25,12 @@ public class Visor {
     @Column(unique = true, nullable = false)
     private String pesel;
     private String phoneNumber;
+    private String username;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "visor", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 
-
 }
-
-

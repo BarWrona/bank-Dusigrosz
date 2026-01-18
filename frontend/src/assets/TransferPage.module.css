@@ -1,0 +1,284 @@
+.pageContainer {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f6f8;
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebarTitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #34495e;
+    padding-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.currencyTableWrapper {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.currencyTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.currencyTable th,
+.currencyTable td {
+    text-align: left;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #34495e;
+}
+
+.currencyTable th {
+    color: #bdc3c7;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    background-color: #2c3e50;
+}
+
+.currencyTable td {
+    font-size: 1rem;
+}
+
+.lastUpdated {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #95a5a6;
+    padding-top: 1rem;
+    border-top: 1px solid #34495e;
+    flex-shrink: 0;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 3rem;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.panel {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 2.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.panelHeader {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panelTitle {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+
+.panelHeaderSmall {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.formSection {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.inputGroupVertical {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input,
+.select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background-color: transparent;
+    color: #2c3e50;
+    outline: none;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.select {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    padding: 0 0.3rem;
+    color: #7f8c8d;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    font-weight: normal;
+}
+
+.input:focus+.label,
+.input:not(:placeholder-shown)+.label,
+.input:disabled+.label,
+.select:focus+.label,
+.select.hasValue+.label {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+    color: #3498db;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.accountList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.accountOption {
+    padding: 1rem;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #2c3e50;
+}
+
+.accountOption:hover {
+    background-color: #f8f9fa;
+    border-color: #bdc3c7;
+}
+
+.accountOption.selected {
+    border-color: #3498db;
+    background-color: #ebf5fb;
+}
+
+.accountDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.accountIban {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.accountBalance {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.transferButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.transferButton:hover {
+    background-color: #27ae60;
+}
+
+.createAccountButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 1rem;
+}
+
+.createAccountButton:hover {
+    background-color: #2980b9;
+}
+
+.successMessage {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.errorMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}

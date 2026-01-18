@@ -89,3 +89,45 @@
     color: #64748b;
     line-height: 1.5;
 }
+.headerFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoutButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.errorMessage {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.tableWrapper {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tableHeader {
+    background-color: #f8f9fa;
+    text-align: left;
+}
+
+.tableCell {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.emptyMessage {
+    padding: 1rem;
+    text-align: center;
+}

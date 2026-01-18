@@ -28,7 +28,11 @@ public class Transfer {
     private BigDecimal amountReceived;
     @Column(precision = 10, scale = 5)
     private BigDecimal exchangeRate;
-    @Column(name="created_at", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "title")
+    private String title;
+    @Column(name = "executor_name")
+    private String executorName;
 
 }

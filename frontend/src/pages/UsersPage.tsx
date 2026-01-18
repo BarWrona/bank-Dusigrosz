@@ -31,9 +31,7 @@ const UsersPage: Component = () => {
                         <button class={styles.backButton} onClick={() => navigate('/control-panel')}>
                             ← Strona Główna
                         </button>
-                        <button class={styles.addButton} onClick={() => navigate('/users/new')}>
-                            + Dodaj nowego
-                        </button>
+
                     </div>
                 </header>
 

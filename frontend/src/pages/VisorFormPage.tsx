@@ -13,11 +13,15 @@ const VisorFormPage: Component = () => {
         lastName: string;
         pesel: string;
         phoneNumber: string;
+        username: string;
+        password?: string;
     }>({
         firstName: '',
         lastName: '',
         pesel: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        username: '',
+        password: ''
     });
 
     const [loading, setLoading] = createSignal(false);
@@ -34,7 +38,8 @@ const VisorFormPage: Component = () => {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     pesel: data.pesel,
-                    phoneNumber: data.phoneNumber
+                    phoneNumber: data.phoneNumber,
+                    username: data.username
                 });
             } catch (err) {
                 setError("Nie udało się pobrać danych");
@@ -51,12 +56,16 @@ const VisorFormPage: Component = () => {
         setValidationErrors({});
 
         try {
-            const payload = { ...formState(), id: isEditMode ? Number(params.id) : 0 };
+            const payload = {
+                ...formState(),
+                pesel: formState().pesel.trim(),
+                id: isEditMode ? Number(params.id) : 0
+            };
 
             if (isEditMode) {
-                await updateVisor(Number(params.id), payload);
+                await updateVisor(Number(params.id), payload as any);
             } else {
-                await createVisor(payload);
+                await createVisor(payload as any);
             }
             navigate('/visors');
         } catch (err: any) {
@@ -159,6 +168,39 @@ const VisorFormPage: Component = () => {
                             <div class={styles.error}>{validationErrors().phoneNumber}</div>
                         </Show>
                     </div>
+                    <div class={styles.formGroup}>
+                        <input
+                            class={styles.input}
+                            id="username"
+                            type="text"
+                            value={formState().username}
+                            onInput={(e) => updateField('username', e.currentTarget.value)}
+                            required
+                            placeholder=" "
+                        />
+                        <label class={styles.label} for="username">Nazwa Użytkownika (Login)</label>
+                        <Show when={validationErrors().username}>
+                            <div class={styles.error}>{validationErrors().username}</div>
+                        </Show>
+                    </div>
+
+                    <Show when={!isEditMode}>
+                        <div class={styles.formGroup}>
+                            <input
+                                class={styles.input}
+                                id="password"
+                                type="password"
+                                value={formState().password}
+                                onInput={(e) => updateField('password', e.currentTarget.value)}
+                                required
+                                placeholder=" "
+                            />
+                            <label class={styles.label} for="password">Hasło</label>
+                            <Show when={validationErrors().password}>
+                                <div class={styles.error}>{validationErrors().password}</div>
+                            </Show>
+                        </div>
+                    </Show>
 
                     <Show when={error()}>
                         <div class={styles.globalError}>{error()}</div>

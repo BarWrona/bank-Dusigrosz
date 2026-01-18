@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(VisorController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class VisorControllerTest {
 
     @Autowired
@@ -32,7 +34,7 @@ public class VisorControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void shouldGetAllVisors() throws Exception{
+    void shouldGetAllVisors() throws Exception {
         VisorDto dto = new VisorDto();
         when(visorService.getAll()).thenReturn(List.of(dto));
 
@@ -42,7 +44,7 @@ public class VisorControllerTest {
     }
 
     @Test
-    void shouldGetVisorById() throws Exception{
+    void shouldGetVisorById() throws Exception {
         Long id = 1L;
         VisorDto dto = new VisorDto();
         when(visorService.getById(id)).thenReturn(dto);
@@ -52,7 +54,7 @@ public class VisorControllerTest {
     }
 
     @Test
-    void shouldCreateVisor() throws Exception{
+    void shouldCreateVisor() throws Exception {
         VisorDto inputDto = new VisorDto();
         VisorDto savedDto = new VisorDto();
 
@@ -65,21 +67,20 @@ public class VisorControllerTest {
     }
 
     @Test
-    void shouldUpdateVisor() throws Exception{
+    void shouldUpdateVisor() throws Exception {
         Long id = 1L;
         VisorDto dto = new VisorDto();
 
-        when(visorService.update(eq(id),any(VisorDto.class))).thenReturn(dto);
+        when(visorService.update(eq(id), any(VisorDto.class))).thenReturn(dto);
 
         mockMvc.perform(put("/api/visors/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto))
-                )
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void shouldDeleteVisor() throws Exception{
+    void shouldDeleteVisor() throws Exception {
         Long id = 1L;
 
         mockMvc.perform(delete("/api/visors/{id}", id))

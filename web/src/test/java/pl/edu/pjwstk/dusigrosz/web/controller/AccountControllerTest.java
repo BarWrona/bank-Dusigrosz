@@ -4,21 +4,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.edu.pjwstk.dusigrosz.common.dto.AccountDto;
 import pl.edu.pjwstk.dusigrosz.service.service.AccountService;
+
+import org.mockito.Mock;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AccountController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AccountControllerTest {
 
     @Autowired
@@ -27,8 +37,18 @@ class AccountControllerTest {
     @MockitoBean
     private AccountService accountService;
 
+    @Mock
+    private SecurityContext securityContext;
+    @Mock
+    private Authentication authentication;
+
     @Autowired
     private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        SecurityContextHolder.setContext(securityContext);
+    }
 
     @Test
     void shouldGetAllAccounts() throws Exception {
@@ -43,11 +63,14 @@ class AccountControllerTest {
     @Test
     void shouldCreateAccount() throws Exception {
         AccountDto accountDto = new AccountDto();
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        doReturn(List.of(new SimpleGrantedAuthority("ADMIN"))).when(authentication).getAuthorities();
+
         when(accountService.create(any(AccountDto.class))).thenReturn(accountDto);
 
         mockMvc.perform(post("/api/accounts")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(accountDto)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(accountDto)))
                 .andExpect(status().isCreated());
     }
 

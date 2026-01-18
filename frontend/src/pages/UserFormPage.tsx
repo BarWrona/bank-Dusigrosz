@@ -15,6 +15,7 @@ const UserFormPage: Component = () => {
     const [pesel, setPesel] = createSignal('');
     const [phoneNumber, setPhoneNumber] = createSignal('');
     const [username, setUsername] = createSignal('');
+    const [password, setPassword] = createSignal('');
 
     const [twoFactor, setTwoFactor] = createSignal(false);
     const [dataCollecting, setDataCollecting] = createSignal(false);
@@ -56,9 +57,10 @@ const UserFormPage: Component = () => {
         const userData: Partial<User> = {
             firstName: firstName(),
             lastName: lastName(),
-            pesel: pesel(),
+            pesel: pesel().trim(),
             phoneNumber: phoneNumber(),
             username: username(),
+            password: password(),
             profile: {
                 userId: 0,
                 twoFactorEnabled: twoFactor(),
@@ -82,7 +84,10 @@ const UserFormPage: Component = () => {
     return (
         <div class={styles.pageWrapper}>
             <div class={styles.container}>
-                <h1 class={styles.title}>{isEditMode() ? 'Edytuj Użytkownika' : 'Kreator Użytkownika'}</h1>
+                <div class={styles.header}>
+                    <h1 class={styles.title}>{isEditMode() ? 'Edytuj Użytkownika' : 'Kreator Użytkownika'}</h1>
+                    <button class={styles.backButtonTop} onClick={() => navigate('/control-panel')}>Wróć do Panelu</button>
+                </div>
 
                 <div class={styles.steps}>
                     <div class={`${styles.step} ${step() >= 1 ? styles.activeStep : ''}`}>1</div>
@@ -102,24 +107,30 @@ const UserFormPage: Component = () => {
                     <Show when={step() === 1}>
                         <div class={styles.stepContent}>
                             <div class={styles.formGroup}>
-                                <label for="firstName">Imię</label>
-                                <input type="text" id="firstName" value={firstName()} onInput={(e) => setFirstName(e.currentTarget.value)} required />
+                                <input class={styles.input} type="text" id="firstName" value={firstName()} onInput={(e) => setFirstName(e.currentTarget.value)} required placeholder=" " />
+                                <label class={styles.label} for="firstName">Imię</label>
                             </div>
                             <div class={styles.formGroup}>
-                                <label for="lastName">Nazwisko</label>
-                                <input type="text" id="lastName" value={lastName()} onInput={(e) => setLastName(e.currentTarget.value)} required />
+                                <input class={styles.input} type="text" id="lastName" value={lastName()} onInput={(e) => setLastName(e.currentTarget.value)} required placeholder=" " />
+                                <label class={styles.label} for="lastName">Nazwisko</label>
                             </div>
                             <div class={styles.formGroup}>
-                                <label for="username">Nazwa użytkownika</label>
-                                <input type="text" id="username" value={username()} onInput={(e) => setUsername(e.currentTarget.value)} required />
+                                <input class={styles.input} type="text" id="username" value={username()} onInput={(e) => setUsername(e.currentTarget.value)} required placeholder=" " />
+                                <label class={styles.label} for="username">Nazwa użytkownika</label>
+                            </div>
+                            <Show when={!isEditMode()}>
+                                <div class={styles.formGroup}>
+                                    <input class={styles.input} type="password" id="password" value={password()} onInput={(e) => setPassword(e.currentTarget.value)} required placeholder=" " />
+                                    <label class={styles.label} for="password">Hasło</label>
+                                </div>
+                            </Show>
+                            <div class={styles.formGroup}>
+                                <input class={styles.input} type="text" id="pesel" value={pesel()} onInput={(e) => setPesel(e.currentTarget.value)} required pattern="\d{11}" disabled={isEditMode()} placeholder=" " />
+                                <label class={styles.label} for="pesel">PESEL</label>
                             </div>
                             <div class={styles.formGroup}>
-                                <label for="pesel">PESEL</label>
-                                <input type="text" id="pesel" value={pesel()} onInput={(e) => setPesel(e.currentTarget.value)} required pattern="\d{11}" disabled={isEditMode()} />
-                            </div>
-                            <div class={styles.formGroup}>
-                                <label for="phoneNumber">Telefon</label>
-                                <input type="tel" id="phoneNumber" value={phoneNumber()} onInput={(e) => setPhoneNumber(e.currentTarget.value)} required />
+                                <input class={styles.input} type="tel" id="phoneNumber" value={phoneNumber()} onInput={(e) => setPhoneNumber(e.currentTarget.value)} required placeholder=" " />
+                                <label class={styles.label} for="phoneNumber">Telefon</label>
                             </div>
                             <button class={styles.nextButton} onClick={handleNext}>Dalej →</button>
                         </div>

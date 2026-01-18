@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.edu.pjwstk.dusigrosz.common.customException.VisorException;
 import pl.edu.pjwstk.dusigrosz.common.dto.UserDto;
 import pl.edu.pjwstk.dusigrosz.common.dto.VisorDto;
@@ -14,7 +15,6 @@ import pl.edu.pjwstk.dusigrosz.domain.model.User;
 import pl.edu.pjwstk.dusigrosz.domain.model.Visor;
 import pl.edu.pjwstk.dusigrosz.domain.repository.VisorRepository;
 import pl.edu.pjwstk.dusigrosz.service.service.VisorService;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,8 @@ class VisorServiceTest {
 
     @Mock
     private VisorRepository visorRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private VisorService visorService;
@@ -51,6 +53,7 @@ class VisorServiceTest {
         sampleVisorDto.setLastName("Kowalski");
         sampleVisorDto.setPesel("12345678901");
         sampleVisorDto.setPhoneNumber("500600700");
+        sampleVisorDto.setPassword("password");
     }
 
     @Test
@@ -117,6 +120,7 @@ class VisorServiceTest {
     void create_ShouldSaveAndReturnDto() {
         // Given
         when(visorRepository.save(any(Visor.class))).thenReturn(sampleVisor);
+        when(passwordEncoder.encode(any())).thenReturn("encodedPassword");
 
         // When
         VisorDto result = visorService.create(sampleVisorDto);
@@ -153,7 +157,7 @@ class VisorServiceTest {
 
     @Test
     @DisplayName("Powinien zrobić update Visora, jeśli istnieje")
-    void update_ShouldUpdateAndReturnDto_WhenExists() throws VisorException{
+    void update_ShouldUpdateAndReturnDto_WhenExists() throws VisorException {
         when(visorRepository.findById(1L)).thenReturn(Optional.of(sampleVisor));
         when(visorRepository.save(any(Visor.class))).thenReturn(sampleVisor);
 
@@ -168,7 +172,7 @@ class VisorServiceTest {
 
     @Test
     @DisplayName("Powinien rzucić wyjątkiem przy próbie modyfikacji nieistniejącego Visora")
-    void update_ShouldThrowException_WhenNotFound(){
+    void update_ShouldThrowException_WhenNotFound() {
         when(visorRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(VisorException.class, () -> visorService.update(1L, new VisorDto()));

@@ -27,7 +27,11 @@ public class User {
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
     private Visor visor;
+    @Column(unique = true, nullable = false)
     private String username;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserProfile userProfile;

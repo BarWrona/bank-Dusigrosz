@@ -20,5 +20,6 @@ public class TransferDto {
     private BigDecimal amountReceived;
     private BigDecimal exchangeRate;
     private LocalDateTime createdAt;
+    private String title;
 
 }

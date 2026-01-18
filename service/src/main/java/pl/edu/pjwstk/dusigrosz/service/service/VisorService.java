@@ -2,10 +2,12 @@ package pl.edu.pjwstk.dusigrosz.service.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.dusigrosz.common.customException.VisorException;
 import pl.edu.pjwstk.dusigrosz.common.dto.UserDto;
 import pl.edu.pjwstk.dusigrosz.common.dto.VisorDto;
+import pl.edu.pjwstk.dusigrosz.domain.model.Role;
 import pl.edu.pjwstk.dusigrosz.domain.model.User;
 import pl.edu.pjwstk.dusigrosz.domain.model.Visor;
 import pl.edu.pjwstk.dusigrosz.domain.repository.VisorRepository;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class VisorService {
 
     private final VisorRepository visorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<VisorDto> getAll() {
         return visorRepository.findAll().stream()
@@ -43,6 +46,8 @@ public class VisorService {
                         user.getPesel(),
                         user.getPhoneNumber(),
                         user.getUsername(),
+                        null,
+                        user.getRole() != null ? user.getRole().name() : null,
                         visor.getFirstName() + " " + visor.getLastName(),
                         visor.getPhoneNumber(),
                         null))
@@ -56,6 +61,18 @@ public class VisorService {
         visor.setLastName(dto.getLastName());
         visor.setPesel(dto.getPesel());
         visor.setPhoneNumber(dto.getPhoneNumber());
+        visor.setUsername(dto.getUsername());
+        visor.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        if (dto.getRole() != null) {
+            try {
+                visor.setRole(Role.valueOf(dto.getRole()));
+            } catch (IllegalArgumentException e) {
+                visor.setRole(Role.VISOR);
+            }
+        } else {
+            visor.setRole(Role.VISOR);
+        }
 
         Visor savedVisor = visorRepository.save(visor);
         return convertToDto(savedVisor);
@@ -91,6 +108,9 @@ public class VisorService {
                 visor.getFirstName(),
                 visor.getLastName(),
                 visor.getPhoneNumber(),
+                visor.getUsername(),
+                null,
+                visor.getRole() != null ? visor.getRole().name() : null,
                 visor.getPesel(),
                 userIds);
     }

@@ -13,6 +13,7 @@ import java.util.Set;
 public class AccountDto {
     private String iban;
     private Long currencyId;
+    private String currencyCode;
     private BigDecimal balance;
     private Set<Long> userIds;
 }

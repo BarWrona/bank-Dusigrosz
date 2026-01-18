@@ -16,6 +16,9 @@ public class VisorDto {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String username;
+    private String password;
+    private String role;
     @PESEL
     private String pesel;
     private List<Long> assignedUserIds;

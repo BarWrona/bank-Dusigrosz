@@ -22,8 +22,31 @@
     color: #115e59;
     font-size: 1.8rem;
     font-weight: 700;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
-    text-align: center;
+}
+
+.backButtonTop {
+    background: none;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.backButtonTop:hover {
+    background-color: #f8fafc;
+    color: #475569;
 }
 
 
@@ -84,30 +107,71 @@
     animation: fadeIn 0.3s ease-out;
 }
 
+
 .formGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
 }
 
-.formGroup label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #374151;
-}
-
-.formGroup input {
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
+.input {
+    width: 100%;
+    padding: 0.8rem 1rem;
     border-radius: 8px;
+    border: 1px solid #e2e8f0;
     font-size: 1rem;
-    transition: all 0.2s;
+    color: #0f172a;
+    background-color: transparent;
+    transition: all 0.2s ease;
+    outline: none;
 }
 
-.formGroup input:focus {
-    outline: none;
-    border-color: #14b8a6;
-    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #0f172a !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.input:disabled {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+    color: #94a3b8;
+    border-color: #cbd5e1;
+}
+
+.input:disabled+.label {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+}
+
+.label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    padding: 0 0.3rem;
+    color: #94a3b8;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.input:focus,
+.input:not(:placeholder-shown) {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+}
+
+.input:focus+.label,
+.input:not(:placeholder-shown)+.label {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+    color: #0d9488;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .nextButton {

@@ -84,7 +84,7 @@ const UserDetailsPage: Component = () => {
                 </Show>
             </div>
 
-            {/* Supervisor Modal */}
+
             <Show when={showSupervisorModal()}>
                 <div class={styles.modalOverlay} onClick={() => setShowSupervisorModal(false)}>
                     <div class={styles.modalContent} onClick={(e) => e.stopPropagation()}>

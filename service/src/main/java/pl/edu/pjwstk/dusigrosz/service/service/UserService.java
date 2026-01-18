@@ -2,16 +2,22 @@ package pl.edu.pjwstk.dusigrosz.service.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.dusigrosz.common.customException.UserException;
+import pl.edu.pjwstk.dusigrosz.common.customException.UserProfileException;
+import pl.edu.pjwstk.dusigrosz.common.customException.VisorException;
 import pl.edu.pjwstk.dusigrosz.common.dto.UserDto;
+import pl.edu.pjwstk.dusigrosz.domain.model.Role;
 import pl.edu.pjwstk.dusigrosz.domain.model.User;
+import pl.edu.pjwstk.dusigrosz.domain.model.Visor;
 import pl.edu.pjwstk.dusigrosz.domain.repository.UserRepository;
 import pl.edu.pjwstk.dusigrosz.domain.repository.VisorRepository;
-import pl.edu.pjwstk.dusigrosz.service.service.UserProfileService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +25,22 @@ public class UserService {
     private final UserRepository userRepository;
     private final VisorRepository visorRepository;
     private final UserProfileService userProfileService;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserDto> getAll() {
-        return userRepository.findAll().stream()
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        boolean isVisor = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("VISOR"));
+
+        List<User> users;
+        if (isVisor) {
+            users = userRepository.findByVisorUsernameIgnoreCase(currentUsername);
+        } else {
+            users = userRepository.findAll();
+        }
+
+        return users.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -39,19 +58,34 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto create(UserDto userDto) {
-        List<pl.edu.pjwstk.dusigrosz.domain.model.Visor> availableVisors = visorRepository.findAll().stream()
+    public UserDto create(UserDto userDto) throws VisorException, UserProfileException {
+        if (userRepository.findByUsernameIgnoreCase(userDto.getUsername()).isPresent()) {
+            throw new UserProfileException("Username already exists");
+        }
+
+        List<Visor> availableVisors = visorRepository.findAll().stream()
                 .filter(v -> v.getUsers().size() < 5)
                 .collect(Collectors.toList());
-        pl.edu.pjwstk.dusigrosz.domain.model.Visor selectedVisor = null;
+        Visor selectedVisor = null;
         if (!availableVisors.isEmpty()) {
             selectedVisor = availableVisors.get(0);
         } else {
-            throw new RuntimeException("No advisors available to assign.");
+            throw new VisorException("No visors available to assign.");
         }
 
         User user = convertToEntity(userDto);
         user.setVisor(selectedVisor);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        if (userDto.getRole() != null) {
+            try {
+                user.setRole(Role.valueOf(userDto.getRole()));
+            } catch (IllegalArgumentException e) {
+                user.setRole(Role.USER);
+            }
+        } else {
+            user.setRole(Role.USER);
+        }
 
         User savedUser = userRepository.save(user);
 
@@ -59,7 +93,7 @@ public class UserService {
             try {
                 userProfileService.create(savedUser.getId(), userDto.getProfile());
             } catch (Exception e) {
-                throw new RuntimeException("Failed to create user profile: " + e.getMessage());
+                throw new UserProfileException("Failed to create user profile: " + e.getMessage());
             }
         }
 
@@ -95,7 +129,9 @@ public class UserService {
                 user.getPesel(),
                 user.getPhoneNumber(),
                 user.getUsername(),
-                user.getVisor() != null ? user.getVisor().getFirstName() + " " + user.getVisor().getLastName() : null,
+                null,
+                user.getRole().name(),
+                user.getVisor() != null ? user.getVisor().getFirstName() : null,
                 user.getVisor() != null ? user.getVisor().getPhoneNumber() : null,
                 null);
     }

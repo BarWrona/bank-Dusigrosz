@@ -16,6 +16,8 @@ public class UserDto {
     private String pesel;
     private String phoneNumber;
     private String username;
+    private String password;
+    private String role;
     private String supervisorName;
     private String supervisorPhoneNumber;
     private UserProfileDto profile;

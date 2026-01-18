@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from './axios';
 
 export interface UserProfile {
     userId: number;
@@ -9,11 +9,11 @@ export interface UserProfile {
 const BASE_URL = '/api/user-profiles';
 
 export const fetchUserProfile = async (userId: number): Promise<UserProfile> => {
-    const response = await axios.get<UserProfile>(`${BASE_URL}/${userId}`);
+    const response = await api.get<UserProfile>(`${BASE_URL}/${userId}`);
     return response.data;
 }
 
 export const updateUserProfile = async (userId: number, profile: UserProfile): Promise<UserProfile> => {
-    const response = await axios.put<UserProfile>(`${BASE_URL}/${userId}`, profile);
+    const response = await api.put<UserProfile>(`${BASE_URL}/${userId}`, profile);
     return response.data;
 }

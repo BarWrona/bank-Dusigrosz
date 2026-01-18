@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.dusigrosz.service;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import pl.edu.pjwstk.dusigrosz.common.customException.AccountException;
 import pl.edu.pjwstk.dusigrosz.common.customException.CurrencyException;
 import pl.edu.pjwstk.dusigrosz.common.customException.UserException;
@@ -19,6 +22,7 @@ import pl.edu.pjwstk.dusigrosz.domain.repository.CurrencyRepository;
 import pl.edu.pjwstk.dusigrosz.domain.repository.UserRepository;
 import pl.edu.pjwstk.dusigrosz.service.service.AccountService;
 import pl.edu.pjwstk.dusigrosz.domain.model.Currency;
+import pl.edu.pjwstk.dusigrosz.service.util.BankAccountsIbanGenerator;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -37,6 +41,12 @@ public class AccountServiceTest {
     UserRepository userRepository;
     @Mock
     CurrencyRepository currencyRepository;
+    @Mock
+    BankAccountsIbanGenerator bankAccountsIbanGenerator;
+    @Mock
+    SecurityContext securityContext;
+    @Mock
+    Authentication authentication;
 
     @InjectMocks
     AccountService accountService;
@@ -47,7 +57,9 @@ public class AccountServiceTest {
     private AccountDto sampleAccountDto;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
+        SecurityContextHolder.setContext(securityContext);
+
         sampleUser = new User();
         sampleUser.setId(1L);
         sampleUser.setAccounts(new HashSet<>());
@@ -57,7 +69,6 @@ public class AccountServiceTest {
         sampleCurrency.setCode("SMP");
         sampleCurrency.setName("SampleName");
         sampleCurrency.setExchangeRate(new BigDecimal("3.312"));
-
 
         sampleAccount = new Account();
         sampleAccount.setIban("SMP1234567890");
@@ -74,8 +85,11 @@ public class AccountServiceTest {
 
     @Test
     @DisplayName("Powinien zwrócić listę wszystkich istniejących kont")
-    void findAll_ShouldReturnListOfDtos(){
+    void findAll_ShouldReturnListOfDtos() {
         when(accountRepository.findAll()).thenReturn(List.of(sampleAccount));
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn("admin");
+        doReturn(List.of(new SimpleGrantedAuthority("ADMIN"))).when(authentication).getAuthorities();
 
         List<AccountDto> result = accountService.findAll();
 
@@ -108,11 +122,13 @@ public class AccountServiceTest {
         when(currencyRepository.findById(1L)).thenReturn(Optional.of(sampleCurrency));
         when(userRepository.findById(1L)).thenReturn(of(sampleUser));
         when(accountRepository.save(any(Account.class))).thenReturn(sampleAccount);
+        when(bankAccountsIbanGenerator.generateIban()).thenReturn("SMP1234567890");
 
         AccountDto result = accountService.create(sampleAccountDto);
 
         assertNotNull(result);
         assertEquals("SMP1234567890", result.getIban());
+        assertEquals("SMP", result.getCurrencyCode());
         verify(accountRepository).save(any(Account.class));
     }
 
@@ -128,6 +144,7 @@ public class AccountServiceTest {
     void create_ShouldThrowUserException_WhenUserIdsEmpty() {
         sampleAccountDto.setUserIds(Collections.emptySet());
         when(currencyRepository.findById(1L)).thenReturn(of(sampleCurrency));
+        when(bankAccountsIbanGenerator.generateIban()).thenReturn("SMP1234567890");
 
         assertThrows(AccountException.class, () -> accountService.create(sampleAccountDto));
     }
@@ -137,6 +154,7 @@ public class AccountServiceTest {
     void create_ShouldThrowUserException_WhenUserNotFound() {
         when(currencyRepository.findById(1L)).thenReturn(of(sampleCurrency));
         when(userRepository.findById(1L)).thenReturn(empty());
+        when(bankAccountsIbanGenerator.generateIban()).thenReturn("SMP1234567890");
 
         assertThrows(UserException.class, () -> accountService.create(sampleAccountDto));
     }
@@ -169,6 +187,5 @@ public class AccountServiceTest {
         when(accountRepository.existsById(1L)).thenReturn(false);
         assertThrows(AccountException.class, () -> accountService.delete(1L));
     }
-
 
 }
