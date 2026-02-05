@@ -88,9 +88,8 @@ const TransferPage: Component = () => {
         setMessage(null);
 
         const sender = allAccounts().find(a => a.iban === senderAccountIban());
-        const receiver = allAccounts().find(a => a.iban === receiverAccountIban());
 
-        if (!sender || !receiver || !amount()) {
+        if (!sender || !receiverAccountIban() || !amount()) {
             setMessage({ text: "Wybierz konta i wpisz kwotę", type: 'error' });
             return;
         }
@@ -98,7 +97,7 @@ const TransferPage: Component = () => {
         try {
             await executeTransfer({
                 senderIban: sender.iban,
-                receiverIban: receiver.iban,
+                receiverIban: receiverAccountIban(),
                 amountSent: parseFloat(amount()),
                 title: title()
             });
